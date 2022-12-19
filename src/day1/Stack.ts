@@ -9,43 +9,42 @@ type Node<T> = {
 export default class Stack<T> {
     public length: number;
     head?: Node<T>;
-    tail?: Node<T>;
 
 
 
     constructor() {
         this.length = 0;
-        this.head = this.tail = undefined;
+        this.head = undefined;
     }
 
     push(item: T): void {
         const node = { value: item } as Node<T>;
         this.length++;
-        if (!this.tail) {
-            this.head = this.tail = node;
+        if (!this.head) {
+            this.head = this.head = node;
         }
-        node.prev = this.tail;
-        this.tail = node;
+        node.prev = this.head;
+        this.head = node;
     }
     pop(): T | undefined {
 
-        if (!this.tail) {
+        if (!this.head) {
             return undefined;
         }
 
-        const tail = this.tail;
+        const head = this.head;
 
-        this.tail = this.tail.prev;
-        tail.prev = undefined;
+        this.head = this.head.prev;
+        head.prev = undefined;
         this.length--;
 
         if (this.length === 0) {
-            this.tail = undefined;
+            this.head = undefined;
         }
-        return tail.value;
+        return head.value;
 
     }
     peek(): T | undefined {
-        return this.tail?.value;
+        return this.head?.value;
     }
 }
